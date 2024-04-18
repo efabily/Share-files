@@ -1,0 +1,25 @@
+<?php $com = $this->communicator(); ?>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel">
+			<h1>Oops!</h1>
+
+			<?php $com->printMessage();?>
+
+			<div class="jumbotron">
+
+				<div class="panel" style="text-align:center;">
+					<img src="<?php echo $this->basePath('img/csstricks.jpg');?>" />
+				</div>
+
+				<p>There was an unexpected error.</p>
+				<p>Please report the error to the <strong>dministrator</strong>.</p>
+				<p>
+					<a role="button" class="btn btn-primary btn-lg" href="<?php echo $this->url('files', array('action' => 'list'));?>"  >Go to the files page</a>
+				</p>				
+
+			</div>
+
+		</div>
+	</div>
+</div>

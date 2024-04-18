@@ -1,0 +1,88 @@
+<?php
+$role = 0;
+$hasIdentity = $this->globals['has_identity'];
+if($hasIdentity)
+{
+    $identity = $this->globals['identity'];
+    $role = $identity->role;
+}
+?>
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">    
+    <?php echo $this->headTitle('ZF2 '. $this->translate('Zoned Out Dot Net'))->setSeparator(' - ')->setAutoEscape(false) ?>
+    
+    <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');?>
+
+
+    <!--STYLESHEET-->
+    <!--=================================================-->
+     <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+
+                ->prependStylesheet($this->basePath('colorbox/colorbox.css')) 
+
+                ->prependStylesheet($this->basePath('theme/plugins/pace/pace.min.css'))// Page Load Progress Bar [ OPTIONAL ]
+                                 
+                ->prependStylesheet($this->basePath('theme/css/demo/nifty-demo.min.css')) // Demo [ DEMONSTRATION ]
+                 
+                 ->prependStylesheet($this->basePath('theme/plugins/bootstrap-select/bootstrap-select.min.css')) //Bootstrap Select [ OPTIONAL ]                 
+                 ->prependStylesheet($this->basePath('theme/plugins/switchery/switchery.min.css')) // Switchery [ OPTIONAL ]                 
+                 ->prependStylesheet($this->basePath('theme/plugins/font-awesome/css/font-awesome.min.css')) // Font Awesome [ OPTIONAL ]                
+                 ->prependStylesheet($this->basePath('theme/css/nifty.min.css')) // Nifty Stylesheet [ REQUIRED ]                
+                 ->prependStylesheet($this->basePath('theme/css/bootstrap.min.css')) // Bootstrap Stylesheet [ REQUIRED ]                 
+                 ->prependStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin') // Open Sans Font [ OPTIONAL ]
+    ;?>
+
+    <!--SCRIPT-->
+    <!--=================================================-->
+    <?php echo $this->headScript()->prependFile($this->basePath('theme/plugins/pace/pace.min.js')); ?>
+
+</head>
+
+<!--TIPS-->
+<!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+
+<body>
+
+    <!--Page content-->
+    <!--===================================================-->
+        <div id="page-content">
+
+            <?php echo $this->content; ?>
+
+        </div>
+    <!--===================================================-->
+    <!--End page content-->
+
+    <!--JAVASCRIPT-->
+    <!--=================================================-->
+    
+ <?php echo $this->inlineScript()
+
+            ->prependFile($this->basePath('colorbox/jquery.colorbox-min.js'))
+            
+            ->prependFile($this->basePath('theme/js/demo/layouts.js')) // Demo script [ DEMONSTRATION ]
+            
+            #->prependFile($this->basePath('theme/js/demo/form-component.js')) // Form Component [ SAMPLE ]
+            ->prependFile($this->basePath('theme/js/demo/nifty-demo.min.js')) // Demo script [ DEMONSTRATION ]
+            ->prependFile($this->basePath('theme/plugins/summernote/summernote.min.js'))// <!--Summernote [ OPTIONAL ]-->
+            ->prependFile($this->basePath('theme/plugins/dropzone/dropzone.min.js'))// <!--Dropzone [ OPTIONAL ]-->
+            ->prependFile($this->basePath('theme/plugins/bootstrap-datepicker/bootstrap-datepicker.js'))// <!--Bootstrap Datepicker [ OPTIONAL ]-->
+            ->prependFile($this->basePath('theme/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js'))// <!--Bootstrap Timepicker [ OPTIONAL ]-->
+            ->prependFile($this->basePath('theme/plugins/noUiSlider/jquery.nouislider.all.min.js'))
+            ->prependFile($this->basePath('theme/plugins/chosen/chosen.jquery.min.js'))
+            ->prependFile($this->basePath('theme/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js'))// Tags Input [ OPTIONAL ]-->
+            ->prependFile($this->basePath('theme/plugins/bootstrap-select/bootstrap-select.min.js'))// Bootstrap Select [ OPTIONAL ]
+            ->prependFile($this->basePath('theme/plugins/switchery/switchery.min.js')) // Switchery [ OPTIONAL ]                       
+            ->prependFile($this->basePath('theme/js/nifty.min.js')) // Nifty Admin [ RECOMMENDED ]
+            ->prependFile($this->basePath('theme/plugins/fast-click/fastclick.min.js')) // Fast Click [ OPTIONAL ]
+            ->prependFile($this->basePath('theme/js/bootstrap.min.js')) // BootstrapJS [ RECOMMENDED ]
+            ->prependFile($this->basePath('theme/js/jquery-2.1.1.min.js')) // jQuery [ REQUIRED ]
+     ;?>
+
+</body>
+</html>

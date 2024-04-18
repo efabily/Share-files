@@ -1,0 +1,147 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('ZF2 '. $this->translate('Files shared'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');?>
+
+
+    <!--STYLESHEET-->
+    <!--=================================================-->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))    			 
+    			 ->prependStylesheet($this->basePath('theme/plugins/pace/pace.min.css'))    			 
+    		     ->prependStylesheet($this->basePath('theme/css/demo/nifty-demo.min.css')) // Demo [ DEMONSTRATION ]
+    			 ->prependStylesheet($this->basePath('theme/plugins/font-awesome/css/font-awesome.min.css')) // Font Awesome [ OPTIONAL ]
+                 ->prependStylesheet($this->basePath('theme/css/nifty.min.css')) // Nifty Stylesheet [ REQUIRED ]
+                 ->prependStylesheet($this->basePath('theme/css/bootstrap.min.css')) // Bootstrap Stylesheet [ REQUIRED ]
+                 ->prependStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin');?>
+
+    <!--SCRIPT-->
+    <!--=================================================-->
+    <?php echo $this->headScript()->prependFile($this->basePath('theme/plugins/pace/pace.min.js')); ?>
+
+    <!--Page Load Progress Bar [ OPTIONAL ]
+    <link href="plugins/pace/pace.min.css" rel="stylesheet">  
+    <script src="plugins/pace/pace.min.js"></script>
+    -->
+    
+	<!--
+
+	REQUIRED
+	You must include this in your project.
+
+	RECOMMENDED
+	This category must be included but you may modify which plugins or components which should be included in your project.
+
+	OPTIONAL
+	Optional plugins. You may choose whether to include it in your project or not.
+
+	DEMONSTRATION
+	This is to be removed, used for demonstration purposes only. This category must not be included in your project.
+
+	SAMPLE
+	Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
+
+
+	Detailed information and more samples can be found in the document.
+
+	-->
+		
+
+</head>
+
+<!--TIPS-->
+<!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+
+<body>	
+	<div id="container" class="cls-container">
+		
+		<!-- BACKGROUND IMAGE -->
+		<!--===================================================-->
+		<div id="bg-overlay" class="bg-img img-balloon"></div>
+		
+		
+		<!-- HEADER -->
+		<!--===================================================-->
+		<div class="cls-header cls-header-lg">
+			<div class="cls-brand">
+				<a class="box-inline" href="<?php echo $this->url('home'); ?>">
+					<!-- <img alt="Nifty Admin" src="img/logo.png" class="brand-icon"> -->
+					<span class="brand-title">Please wait, logging in...</span>
+				</a>
+			</div>
+		</div>
+		<!--===================================================-->
+		
+		
+		<?php echo $this->content; ?>
+		
+		
+		<!-- DEMO PURPOSE ONLY -->
+		<!--===================================================-->
+		<div class="demo-bg" style="display:none;" >
+			<div id="demo-bg-list">
+				<div class="demo-loading"><i class="fa fa-refresh"></i></div>
+				<img class="demo-chg-bg bg-trans" src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-trns.jpg');?>" alt="Background Image" >
+				<img class="demo-chg-bg" src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-img-1.jpg');?>" alt="Background Image" >
+				<img class="demo-chg-bg active" src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-img-2.jpg');?>" alt="Background Image" >
+				<img class="demo-chg-bg" src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-img-3.jpg');?>" alt="Background Image" >
+				<img class="demo-chg-bg" src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-img-4.jpg');?>" alt="Background Image" >
+				<img class="demo-chg-bg" src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-img-5.jpg');?>" alt="Background Image" >
+				<img class="demo-chg-bg" src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-img-6.jpg');?>" alt="Background Image" >
+				<img class="demo-chg-bg " src="<?php echo $this->basePath('theme/img/bg-img/thumbs/bg-img-7.jpg');?>" alt="Background Image" >
+			</div>
+		</div>
+		<!--===================================================-->
+		
+		
+		
+	</div>
+	<!--===================================================-->
+	<!-- END OF CONTAINER -->
+
+
+		
+    <!--JAVASCRIPT-->
+    <!--=================================================-->    
+    <?php echo $this->headScript()
+            ->prependFile($this->basePath('theme/js/demo/bg-images.js')) // Background Image [ DEMONSTRATION ]            
+            ->prependFile($this->basePath('theme/js/nifty.min.js')) // Nifty Admin [ RECOMMENDED ]
+            ->prependFile($this->basePath('theme/plugins/fast-click/fastclick.min.js'))
+            ->prependFile($this->basePath('theme/js/bootstrap.min.js')) // BootstrapJS [ RECOMMENDED ]
+            ->prependFile($this->basePath('theme/js/jquery-2.1.1.min.js')) // jQuery [ REQUIRED ]
+        ;?>
+    
+	<!--
+
+	REQUIRED
+	You must include this in your project.
+
+	RECOMMENDED
+	This category must be included but you may modify which plugins or components which should be included in your project.
+
+	OPTIONAL
+	Optional plugins. You may choose whether to include it in your project or not.
+
+	DEMONSTRATION
+	This is to be removed, used for demonstration purposes only. This category must not be included in your project.
+
+	SAMPLE
+	Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
+
+
+	Detailed information and more samples can be found in the document.
+
+	-->
+	 <script type="text/javascript" >
+	 	jQuery(document).ready(function($) {
+			$("#btnSubmit").click();
+		});	 	
+	 </script>
+
+</body>
+</html>

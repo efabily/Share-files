@@ -1,0 +1,76 @@
+<?php
+$com = $this->communicator();
+?>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<h3 class="panel-title"><?php echo $this->document_title ?></h3>
+			</div>							
+					
+			<!--Horizontal Form-->
+			<?php $com->printMessage() ?>
+
+			<!--===================================================-->
+			<form class="form-horizontal" method="post" action="<?php echo $this->document_action;?>" >
+				<div class="panel-body">
+					<div class="form-group <?php $com->printErrorClass('display_name'); ?>">
+						<label class="col-sm-3 control-label" for="demo-hor-inputemail">Full Name</label>
+						<div class="col-sm-9">
+							<input type="text" placeholder="Full Name" id="demo-hor-inputemail" class="form-control" name="display_name" value="<?php echo $this->escapehtml($this->display_name) ?>" >
+							<?php $com->printFieldErrors('display_name'); ?>
+						</div>
+					</div>
+					<div class="form-group <?php $com->printErrorClass('email'); ?>">
+						<label class="col-sm-3 control-label" for="demo-hor-inputemail">Email</label>
+						<div class="col-sm-9">
+							<input type="email" placeholder="Email" id="demo-hor-inputemail" class="form-control" name="email" value="<?php echo $this->escapehtml($this->email) ?>" >
+							<?php $com->printFieldErrors('email'); ?>
+						</div>
+					</div>
+					
+					<div class="form-group <?php $com->printErrorClass('password'); ?>">
+						<label class="col-sm-3 control-label" for="demo-hor-inputpass">Password</label>
+						<div class="col-sm-9">
+							<input type="password" placeholder="Password" id="demo-hor-inputpass" class="form-control" name="password" >	<?php $com->printFieldErrors('password'); ?>												
+						</div>
+					</div>
+					
+					<div class="form-group <?php $com->printErrorClass('state'); ?>">
+						<label class="col-sm-3 control-label" for="demo-hor-inputpass">Status</label>
+						<div class="col-sm-9">
+							<div class="box-inline mar-rgt">
+					
+								<!--Switchery : Checked by default-->
+								<!--===================================================-->
+								<input id="demo-sw-checkstate" name="state" type="checkbox" <?php if($this->state) echo 'checked="checked"' ?> value="1" data-switchery="true" style="display: none;">
+								<!--===================================================-->
+								<span id="demo-sw-checkstate-field" class="label label-info">Enabled</span>
+
+								<?php $com->printFieldErrors('state'); ?>
+							</div>
+												
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer text-right">
+					<button class="btn btn-info" type="submit">Save</button>
+				</div>
+			</form>
+
+			<!--===================================================-->
+			<!--End Horizontal Form-->				
+		</div>
+	</div>
+</div>
+
+<?php echo $this->inlineScript()->captureStart() ?>
+    var changeCheckbox = document.getElementById('demo-sw-checkstate');
+    var changeField = document.getElementById('demo-sw-checkstate-field');
+    new Switchery(changeCheckbox);
+    
+  	changeField.innerHTML = changeCheckbox.checked ? "Enabled" : "Disabled";
+  	changeCheckbox.onchange = function() {
+  		changeField.innerHTML = changeCheckbox.checked ? "Enabled" : "Disabled";
+  	};
+<?php echo $this->inlineScript()->captureEnd() ?>

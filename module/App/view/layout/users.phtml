@@ -1,0 +1,320 @@
+<?php
+$role = 0;
+$hasIdentity = $this->globals['has_identity'];
+if($hasIdentity)
+{
+	$identity = $this->globals['identity'];
+	$role = $identity->role;
+}
+?>
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">    
+    <?php echo $this->headTitle('ZF2 '. $this->translate('Zoned Out Dot Net'))->setSeparator(' - ')->setAutoEscape(false) ?>
+    
+    <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');?>
+
+
+    <!--STYLESHEET-->
+    <!--=================================================-->
+     <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+
+     			->prependStylesheet($this->basePath('colorbox/colorbox.css')) 
+
+    			->prependStylesheet($this->basePath('theme/plugins/pace/pace.min.css'))// Page Load Progress Bar [ OPTIONAL ]
+    			     			 
+    			->prependStylesheet($this->basePath('theme/css/demo/nifty-demo.min.css')) // Demo [ DEMONSTRATION ]
+    			 
+    			 ->prependStylesheet($this->basePath('theme/plugins/bootstrap-select/bootstrap-select.min.css')) //Bootstrap Select [ OPTIONAL ]    			 
+    		     ->prependStylesheet($this->basePath('theme/plugins/switchery/switchery.min.css')) // Switchery [ OPTIONAL ]    		     
+    			 ->prependStylesheet($this->basePath('theme/plugins/font-awesome/css/font-awesome.min.css')) // Font Awesome [ OPTIONAL ]    			 
+                 ->prependStylesheet($this->basePath('theme/css/nifty.min.css')) // Nifty Stylesheet [ REQUIRED ]                
+                 ->prependStylesheet($this->basePath('theme/css/bootstrap.min.css')) // Bootstrap Stylesheet [ REQUIRED ]                 
+                 ->prependStylesheet('http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin') // Open Sans Font [ OPTIONAL ]
+    ;?>
+
+    <!--SCRIPT-->
+    <!--=================================================-->
+	<?php echo $this->headScript()->prependFile($this->basePath('theme/plugins/pace/pace.min.js')); ?>
+
+</head>
+
+<!--TIPS-->
+<!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+
+<body>	
+	<div id="container" class="effect mainnav-sm navbar-fixed">	
+		
+		<!--NAVBAR-->
+		<!--===================================================-->
+		<header id="navbar">
+			<div id="navbar-container" class="boxed">
+
+				<!--Brand logo & name-->
+				<!--================================-->
+				<div class="navbar-header">
+					<a href="javascript:;" class="navbar-brand">
+						<img src="<?php echo $this->basePath('theme/img/logo.png');?>" alt="Nifty Logo" class="brand-icon" >
+						<div class="brand-title">
+							<span class="brand-text">Zoned Out Dot Net</span>
+						</div>
+					</a>
+				</div>
+				<!--================================-->
+				<!--End brand logo & name-->
+
+
+				<!--Navbar Dropdown-->
+				<!--================================-->
+				<div class="navbar-content clearfix">
+
+					<ul class="nav navbar-top-links pull-right">
+
+						<!--User dropdown-->
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<li id="dropdown-user" class="dropdown">
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
+								<span class="pull-right">
+									<img class="img-circle img-user media-object" src="<?php echo $this->basePath('theme/img/av1.png');?>" alt="Profile Picture">
+								</span>
+								<div class="username hidden-xs"><?php echo $this->zfcUserDisplayName() ?></div>
+							</a>
+
+
+							<div class="dropdown-menu dropdown-menu-md dropdown-menu-right with-arrow panel-default">
+
+								<!-- Dropdown heading  -->
+								<div class="pad-all bord-btm">
+									<p class="text-lg text-muted text-thin mar-btm"></p>
+									<div class="progress progress-sm">
+										<div class="progress-bar" style="width: 100%;">
+											<span class="sr-only">100%</span>
+										</div>
+									</div>
+								</div>
+
+
+								<!-- User dropdown menu --> <!-- here -->
+								<ul class="head-list">
+
+								    <li>
+										<a href="<?php echo $this->url('change-password');?>">											
+											<i class="fa fa-gear fa-fw fa-lg"></i> Change Password
+										</a>
+									</li>									
+
+								</ul>
+
+								<!-- Dropdown footer -->
+								<div class="pad-all text-right">
+									<a href="<?php echo $this->url('zfcuser/logout') ?>" class="btn btn-primary">
+										<i class="fa fa-sign-out fa-fw"></i> Logout
+									</a>
+								</div>
+							</div>
+						</li>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<!--End user dropdown-->
+
+					</ul>
+					
+					<ul class="nav navbar-top-links pull-right">
+
+						<!--Mega dropdown-->
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<li class="mega-dropdown">
+							<a href="#" class="mega-dropdown-toggle">
+								<i class="fa fa-th-large fa-lg"></i>
+							</a>
+							<div class="dropdown-menu mega-dropdown-menu ">
+								<div class="clearfix">
+																	
+									<div class="col-sm-4 col-md-3">
+
+										<!--Mega menu list-->
+										<ul class="list-unstyled">
+											<li class="dropdown-header"><i class="fa fa-archive"></i> Files</li>											
+											<li><a href="<?php echo $this->url('files', array('action' => 'list'));?>"><i class="fa fa-reorder"></i> List</a></li>																				
+											<li class="divider"></li>
+											
+										</ul>
+
+									</div>
+									<div class="col-sm-4 col-md-3">	
+                                         <?php if($role == 1) : ?>
+                                         	
+										<!--Mega menu list-->
+										<ul class="list-unstyled">
+											<li class="dropdown-header"> <i class="fa fa-users"></i> Users</li>											
+											<li><a href="<?php echo $this->url('users', array('action' => 'add'));?>"><i class="fa fa-plus"></i> Add</a></li>											
+											<li><a href="<?php echo $this->url('users', array('action' => 'list'));?>"><i class="fa fa-reorder"></i> List</a></li>
+											<li class="divider"></li>											
+										</ul>
+										<?php endif;?>
+
+									</div>
+									<div class="col-sm-4 col-md-3">
+
+										
+									</div>
+								</div>
+							</div>
+						</li>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<!--End mega dropdown-->
+
+					</ul>
+				</div>
+				<!--================================-->
+				<!--End Navbar Dropdown-->
+
+			</div>
+		</header>
+		<!--===================================================-->
+		<!--END NAVBAR-->
+
+		<div class="boxed">
+
+			<!--CONTENT CONTAINER-->
+			<!--===================================================-->
+			<div id="content-container">
+
+				<!--Page content-->
+				<!--===================================================-->
+				<div id="page-content">
+
+					<?php echo $this->content; ?>
+
+				</div>
+				<!--===================================================-->
+				<!--End page content-->
+
+			</div>
+			<!--===================================================-->
+			<!--END CONTENT CONTAINER-->
+			
+			<!--MAIN NAVIGATION-->
+			<!--===================================================-->
+			
+			<nav id="mainnav-container" class="affix" >
+				<div id="mainnav">
+
+					<!--Shortcut buttons-->
+					<!--================================-->
+					<div id="mainnav-shortcut">
+						<ul class="list-unstyled">							
+							<li class="col-xs-4" data-content="List" data-original-title="" title="">
+								<a class="shortcut-grid" href="<?php echo $this->url('files', array('action' => 'list'));?>">
+									<i class="fa fa-reorder"></i>
+								</a>
+							</li>
+							<!--
+							<li class="col-xs-4" data-content="Upload" data-original-title="" title="">
+								<a class="shortcut-grid" href="<?php echo $this->url('files', array('action' => 'upload'));?>">
+									<i class="fa fa-upload"></i>
+								</a>
+							</li>
+							-->
+						</ul>
+					</div>
+					<!--================================-->
+					<!--End shortcut buttons-->				
+
+				</div>
+			</nav>
+			<!--===================================================-->
+			<!--END MAIN NAVIGATION-->
+
+		</div>
+
+		
+
+        <!-- FOOTER -->
+        <!--===================================================-->
+        <footer id="footer">
+
+            <!-- Visible when footer positions are fixed -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <div class="show-fixed pull-right">
+                <ul class="footer-list list-inline">
+                    <li>
+                        <p class="text-sm">SEO Proggres</p>
+                        <div class="progress progress-sm progress-light-base">
+                            <div style="width: 80%" class="progress-bar progress-bar-danger"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <p class="text-sm">Online Tutorial</p>
+                        <div class="progress progress-sm progress-light-base">
+                            <div style="width: 80%" class="progress-bar progress-bar-primary"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <button class="btn btn-sm btn-dark btn-active-success">Checkout</button>
+                    </li>
+                </ul>
+            </div>
+
+
+
+            <!-- Visible when footer positions are static -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <div class="hide-fixed pull-right pad-rgt">Currently v1</div>
+
+
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Remove the class name "show-fixed" and "hide-fixed" to make the content always appears. -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <p class="pad-lft">&#0169; <?php echo date('Y');?> Zoned Out Dot Net</p>
+
+
+
+        </footer>
+        <!--===================================================-->
+        <!-- END FOOTER -->
+
+
+        <!-- SCROLL TOP BUTTON -->
+        <!--===================================================-->
+        <button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
+        <!--===================================================-->
+
+	</div>
+	<!--===================================================-->
+	<!-- END OF CONTAINER -->
+	
+    <!--JAVASCRIPT-->
+    <!--=================================================-->
+    
+ <?php echo $this->inlineScript()
+
+ 			->prependFile($this->basePath('colorbox/jquery.colorbox-min.js'))
+ 			
+    		->prependFile($this->basePath('theme/js/demo/layouts.js')) // Demo script [ DEMONSTRATION ]
+    		
+    		#->prependFile($this->basePath('theme/js/demo/form-component.js')) // Form Component [ SAMPLE ]
+    		->prependFile($this->basePath('theme/js/demo/nifty-demo.min.js')) // Demo script [ DEMONSTRATION ]
+    		->prependFile($this->basePath('theme/plugins/summernote/summernote.min.js'))// <!--Summernote [ OPTIONAL ]-->
+    		->prependFile($this->basePath('theme/plugins/dropzone/dropzone.min.js'))// <!--Dropzone [ OPTIONAL ]-->
+    		->prependFile($this->basePath('theme/plugins/bootstrap-datepicker/bootstrap-datepicker.js'))// <!--Bootstrap Datepicker [ OPTIONAL ]-->
+    		->prependFile($this->basePath('theme/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js'))// <!--Bootstrap Timepicker [ OPTIONAL ]-->
+    		->prependFile($this->basePath('theme/plugins/noUiSlider/jquery.nouislider.all.min.js'))
+    		->prependFile($this->basePath('theme/plugins/chosen/chosen.jquery.min.js'))
+    		->prependFile($this->basePath('theme/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js'))// Tags Input [ OPTIONAL ]-->
+    		->prependFile($this->basePath('theme/plugins/bootstrap-select/bootstrap-select.min.js'))// Bootstrap Select [ OPTIONAL ]
+            ->prependFile($this->basePath('theme/plugins/switchery/switchery.min.js')) // Switchery [ OPTIONAL ]                       
+            ->prependFile($this->basePath('theme/js/nifty.min.js')) // Nifty Admin [ RECOMMENDED ]
+            ->prependFile($this->basePath('theme/plugins/fast-click/fastclick.min.js')) // Fast Click [ OPTIONAL ]
+            ->prependFile($this->basePath('theme/js/bootstrap.min.js')) // BootstrapJS [ RECOMMENDED ]
+            ->prependFile($this->basePath('theme/js/jquery-2.1.1.min.js')) // jQuery [ REQUIRED ]
+     ;?>
+
+</body>
+</html>

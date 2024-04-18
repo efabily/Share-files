@@ -1,0 +1,125 @@
+<?php $com = $this->communicator();
+/* */
+	// add at the end of the file after the table
+	$paginator = $this->paginationControl(
+     // the paginator object
+     $this->rowset,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     'partials/simple_paginator.phtml',     
+     // the route to link to when a user clicks a control link
+     // array('route' => $this->route, 'route_params' => array('action' => 'adas'))
+     $this->route
+ 	);
+ ?>
+<div class="panel">
+	<div class="panel-heading">
+		<h3 class="panel-title">Please choose the folder</h3>
+	</div>							
+
+	<?php $com->printMessage();?>
+
+	<!--===================================================-->
+	<form class="form-horizontal" method="post" action="<?php echo $this->document_action;?>"  >
+		<div class="panel-body">
+
+			<div class="form-group <?php $com->printErrorClass('name'); ?>">			
+
+				<div class="col-sm-12">
+
+					<input type="hidden" name="files" value="<?php echo $this->selected_files; ?>" />
+					<input type="hidden" name="option" id="option" value="search" />
+					<input type="hidden" name="current_document_action" value="<?php echo $this->document_action;?>" />
+
+					<div class="input-group custom-search-form">                   
+						<input type="text" class="form-control" placeholder="Search applies to folder name and users" name="search" value="<?php echo $this->search;?>" >
+						<span class="input-group-btn" >
+							<button id="demo-mail-ref-btn" class="btn btn-default" type="submit" >
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Folder name</th>
+								<th>Autor</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>								
+								<td colspan="3">
+
+									<div class="input-group mar-btm" style="width:100%;" >
+										<span class="input-group-addon">
+											<label class="form-radio form-icon">
+												<input type="radio" name="folder" value="0" id="radio_root">
+											</label>
+										</span>
+										<label class="form-control" for="radio_root">
+											Root folder
+										</label>
+									</div>
+
+								</td>								
+							</tr>
+
+							<?php foreach($this->rowset as $row):?>
+
+							<tr>
+								<td colspan="2" style="border-top:none; width:60%;">
+
+									<div class="input-group mar-btm" style="width:95%;" >
+										<span class="input-group-addon">
+											<label class="form-radio form-icon">
+												<input type="radio" id="radio_<?php echo $row->id;?>" name="folder" value="<?php echo $row->id;?>" >
+											</label>
+										</span>
+										<label class="form-control" for="radio_<?php echo $row->id;?>">
+											<?php echo $row->name;?>
+										</label>
+									</div>
+									
+								</td>									
+								<td style="border-top:none;" >									
+									<div class="input-group mar-btm" style="width:95%;" >
+										<label class="form-control">
+											<?php echo $row->display_name;?>
+										</label>
+									</div>										
+								</td>
+							</tr>
+							<?php endforeach; ?>
+
+						</tbody>
+					</table>
+					
+					<!--Mail footer-->
+					<div class="panel-footer clearfix">
+						<div class="pull-right">
+							<?php echo $paginator; ?>
+						</div>
+					</div>
+
+				</div>							
+			</div>					
+
+		</div>
+		<div class="panel-footer text-right">
+			<button class="btn btn-info" id="save" type="submit">Save</button>
+		</div>
+	</form>
+
+	<!--===================================================-->
+	<!--End Horizontal Form-->				
+</div>
+<?php $this->inlineScript()->captureStart(); ?>
+	jQuery(document).ready(function($) {
+		$("#save").click(function(){            
+            $("#option").val('save');
+		});
+	});
+<?php $this->inlineScript()->captureEnd(); ?>

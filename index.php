@@ -1,0 +1,1 @@
+<?php // header('Location: http://whilex.com/files/public_html/');?>

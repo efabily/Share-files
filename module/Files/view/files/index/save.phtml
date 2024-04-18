@@ -1,0 +1,35 @@
+<?php
+$com = $this->communicator();
+?>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<h3 class="panel-title"><?php echo $this->document_title ?></h3>
+			</div>							
+					
+			<!--Horizontal Form-->
+			<?php $com->printMessage() ?>
+
+			<!--===================================================-->
+			<form class="form-horizontal" method="post" action="<?php echo $this->document_action;?>" >
+				<div class="panel-body">
+					<div class="form-group <?php $com->printErrorClass('name'); ?>">
+						<label class="col-sm-3 control-label" for="demo-hor-inputemail">Name</label>
+						<div class="col-sm-9">
+							<input type="text" placeholder="Folder name" id="demo-hor-inputemail" class="form-control" name="name" value="<?php echo $this->escapehtml($this->name) ?>" >
+							<?php $com->printFieldErrors('name'); ?>
+						</div>
+					</div>					
+
+				</div>
+				<div class="panel-footer text-right">
+					<button class="btn btn-info" type="submit">Save</button>
+				</div>
+			</form>
+
+			<!--===================================================-->
+			<!--End Horizontal Form-->				
+		</div>
+	</div>
+</div>

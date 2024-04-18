@@ -1,0 +1,110 @@
+<?php
+$com = $this->communicator();
+$userId = $this->user_id;
+?>
+<div class="panel">
+		<div class="panel-heading">
+			<h3 class="panel-title">List Users</h3>
+		</div>
+
+		<?php $com->printMessage() ?>
+					
+		<!-- Foo Table - Add & Remove Rows -->
+		<!--===================================================-->
+		<div class="panel-body">
+			<div class="pad-btm form-inline">
+				<div class="row">
+					<div class="col-sm-6 text-xs-center">
+						<div class="form-group">
+						    <a href="<?php echo $this->url('users', array('action' => 'add'));?>">
+								<button id="demo-btn-addrow" class="btn btn-purple btn-labeled fa fa-plus">Add User</button>
+							</a>
+						</div>
+					</div>
+					<div class="col-sm-6 text-xs-center text-right">
+						
+					</div>
+				</div>
+			</div>
+
+			<table id="demo-foo-addrow" class="table table-bordered table-hover toggle-circle tablet breakpoint footable-loaded footable" data-page-size="7">
+				<thead>
+					<tr>
+						<th data-sort-ignore="true" class="footable-visible footable-first-column" style="width:80px;"></th>
+						<th data-sort-initial="true" data-toggle="true" class="footable-visible footable-sortable footable-sorted">ID<span class="footable-sort-indicator"></span></th>
+						<th class="footable-visible footable-last-column footable-sortable">Full Name<span class="footable-sort-indicator"></span></th>
+						<th data-hide="phone, tablet"  class="footable-sortable">Email<span class="footable-sort-indicator"></span></th>						
+						<th data-hide="phone, tablet"  class="footable-sortable">Status<span class="footable-sort-indicator"></span></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+				<?php foreach ($this->rowset as $row):?>
+					<tr class="footable-even" style="display: table-row;">
+						<td class="footable-visible footable-first-column" >
+						    
+                            <div class="btn-group" >
+
+                                <?php if($row->user_id == $userId):?>
+                                	<a class="btn btn-danger btn-icon btn- icon-xs fa fa-times disabled" href="javascript:;" ></a>
+                                <?php else:?>
+                                	<a class="btn btn-danger btn-icon btn- icon-xs fa fa-times jqDelete" href="<?php echo $this->url('users/wildcard', array('action' => 'delete', 'id' => $row->user_id));?>" ></a>
+                                <?php endif;?>
+
+                                <?php if($row->user_id == 4):?>
+                                	<a class="btn btn-primary btn-icon btn- icon-xs fa fa-edit disabled" href="javascript:;" > </a>
+                               <?php else:?>
+                               		<a class="btn btn-primary btn-icon btn- icon-xs fa fa-edit" href="<?php echo $this->url('users/wildcard', array('action' => 'edit', 'id' => $row->user_id));?>" > </a>
+                                <?php endif;?>
+
+                            </div>
+
+						</td>
+						<td class="footable-visible">
+							<?php echo $row->user_id;?>
+						</td>
+						<td class="footable-visible footable-last-column">
+							<?php echo $row->display_name;?>
+						</td>
+						<td >
+							<?php echo $row->email;?>
+						</td>
+						<td >
+						    <?php if($row->state):?>
+							<span class="label label-success">Enabled</span>
+							<?php else:?>
+							<span class="label label-danger">Disabled</span>
+							<?php endif;?>
+						</td>
+					</tr>
+				<?php endforeach;?>
+				</tbody>
+				
+				<!-- 
+				<tfoot>
+					<tr>
+						<td colspan="6" class="footable-visible">
+							<div class="text-right">
+								<ul class="pagination"><li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li><li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li><li class="footable-page active"><a data-page="0" href="#">1</a></li><li class="footable-page"><a data-page="1" href="#">2</a></li><li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li><li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li></ul>
+							</div>
+						</td>
+					</tr>
+				</tfoot>
+				 -->
+				 
+			</table>
+		</div>
+		<!--===================================================-->
+		<!-- End Foo Table - Add & Remove Rows -->
+
+	</div>
+    
+<?php $this->inlineScript()->captureStart() ?>
+
+jQuery(document).ready(function($) {
+
+		$(".jqDelete").click(function(){ 
+            return confirm('Please confirm that you want to deleted the selected record.');
+		});
+    });
+<?php $this->inlineScript()->captureEnd() ?>

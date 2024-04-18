@@ -1,0 +1,122 @@
+<?php 
+
+$this->headLink()
+    	 ->prependStylesheet($this->basePath('plupload/css/jquery-ui.min.css'))
+    	  ->prependStylesheet($this->basePath('plupload/css/jquery.ui.plupload.css'))
+    	;
+    		     
+
+$this->inlineScript()
+ 		->prependFile($this->basePath('plupload/js/themeswitcher.js'))
+ 		->prependFile($this->basePath('plupload/js/jquery.ui.plupload.min.js'))
+    	->prependFile($this->basePath('plupload/js/plupload.full.min.js'))
+    	->prependFile('https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js')
+    	; ?>
+
+<div class="panel">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php echo $this->document_title;?></h3>        
+	</div>
+
+	<div class="panel-body">	
+
+		<div id="uploader">
+		    <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+		</div>					
+					
+	</div>
+</div>
+
+<?php $this->inlineScript()->captureStart(); ?>
+
+// Initialize the widget when the DOM is ready
+$(function() {
+    $("#uploader").plupload({
+        // General settings
+        runtimes : 'html5,flash,silverlight,html4',
+        url : "<?php echo $this->document_action;?>",
+ 
+        // Maximum file size
+        // max_file_size : '2mb',
+ 
+        // chunk_size: '1mb',
+ 
+        // Resize images on clientside if we can
+        /*
+        resize : {
+            width : 200,
+            height : 200,
+            quality : 90,
+            crop: true // crop to exact dimensions
+        },
+        */
+ 
+        // Specify what files to browse for
+        filters : [
+            {title : "Image files", extensions : "jpg,jpeg,gif,png"},
+            {title : "Zip files", extensions : "zip,avi"}
+        ],
+        
+ 
+        // Rename files by clicking on their titles
+        rename: true,
+         
+        // Sort files
+        sortable: true,
+ 
+        // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+        dragdrop: true,
+ 
+        // Views to activate
+        views: {
+            list: true,
+            thumbs: true, // Show thumbs
+            active: 'thumbs'
+        },
+ 
+        // Flash settings
+        // flash_swf_url : '/plupload/js/Moxie.swf',
+     
+        // Silverlight settings
+        // silverlight_xap_url : '/plupload/js/Moxie.xap'
+    });
+});
+
+
+/*
+var uploader = new plupload.Uploader({	
+	runtimes : 'html5',
+	browse_button : 'pickfiles', // you can pass an id...
+	container: document.getElementById('container'), // ... or DOM Element itself
+	url : '<?php echo $this->url('files', array('action' => 'ajax-upload')) ?>',
+
+	init: {
+		PostInit: function() {
+			document.getElementById('filelist').innerHTML = '';
+
+			document.getElementById('uploadfiles').onclick = function() {
+				uploader.start();
+				return false;
+			};
+		},
+
+		FilesAdded: function(up, files) {
+			plupload.each(files, function(file) {
+				document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+			});
+		},
+
+		UploadProgress: function(up, file) {
+			document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+		},
+
+		Error: function(up, err) {
+			document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+		}
+	}
+});
+
+uploader.init();
+*/
+
+<?php $this->inlineScript()->captureEnd(); ?>

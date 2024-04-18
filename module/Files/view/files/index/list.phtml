@@ -1,0 +1,384 @@
+<?php $com = $this->communicator();
+
+// add at the end of the file after the table
+$paginator = $this->paginationControl(
+     // the paginator object
+     $this->rowset,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     'partials/simple_paginator.phtml',
+     // the route to link to when a user clicks a control link
+     $this->route
+ ); ?>
+
+<style>
+	@media (min-width: 992px)
+	.count-download {
+	    width: 35px;
+	    float: right;
+	    text-align: right;
+	    min-height: 1.5em;
+	}
+</style>
+
+<div class="panel panel-default panel-left" >
+	<div id="demo-email-list" class="panel-body">
+		<div class="row">
+			<div class="col-sm-8">
+				<h3 class="panel-title"><?php echo $this->page_title;?></h3>
+			</div>
+			<div class="col-sm-4">
+
+				<form action="<?php echo $this->url_search;?>" method="post" >
+					<div class="input-group custom-search-form">                   
+						<input type="text" class="form-control" placeholder="Search folders and files" name="search" value="<?php echo $this->search;?>" >
+						<span class="input-group-btn" >
+							<button id="demo-mail-ref-btn" class="btn btn-default" type="submit" >
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<?php $com->printMessage(); ?>
+			</div>
+		</div>
+
+		<div class="row">		
+			<div class="col-sm-7 clearfix">
+			
+				<div class="btn-group">
+
+					<div id="demo-checked-all-mail" class="btn btn-default add-tooltip"  data-toggle="tooltip" data-original-title="Selected all" data-container="body" >
+						<label class="form-checkbox form-normal form-primary active" >
+							<input class="form-input" type="checkbox" name="mail-list" id="jqMainCheckbox" >							
+						</label>
+					</div>
+
+				</div>
+
+				<div class="btn-group">
+					<button class="btn btn-default">Actions</button>
+					<button class="btn btn-default dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button" aria-expanded="false">
+						<i class="dropdown-caret fa fa-caret-down"></i>
+					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="javascript:;" id="jqDownloadFiles" style="text-align:left;" >
+								<i class="fa fa-cloud-download" ></i>  Download files
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" id="jqMoveFiles" style="text-align:left;" >
+								<i class="fa fa-exchange" ></i>  Move Files</a>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" id="jqDeleteFiles" style="text-align:left;" >
+								<i class="fa fa-times" ></i> Delete Files
+							</a>
+						</li>						
+					</ul>
+				</div>
+
+
+				<a href="<?php echo $this->url_upload; ?>" class="btn btn-info btn-labeled fa fa-cloud-upload iframe">Upload</a>				
+
+				<?php if(is_null($this->current_folder_id)):?>
+					<a href="<?php echo $this->url_add_folder; ?>" class="btn btn-purple btn-labeled fa fa-plus iframe-folder" >Folder</a>
+				<?php endif;?>
+
+			</div>
+
+
+			<hr class="hr-sm visible-xs">
+			<div class="col-sm-5 clearfix">
+				<div class="pull-right">										
+					<?php echo $paginator ?>					
+				</div>
+			</div>
+		</div>
+		<hr class="hr-sm">
+				
+		<table id="demo-custom-toolbar" class="demo-add-niftycheck table table-hover" data-toggle="table" data-url="data/bs-table.json" data-toolbar="#demo-delete-row" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-sort-name="id" data-page-list="[5, 10, 20]" data-page-size="5" data-pagination="true" data-show-pagination-switch="true">
+			<thead>
+				<tr>
+					<th class="bs-checkbox " style="width: 56px; ">
+						<div class="th-inner ">
+							Actions
+						</div>
+						<div class="fht-cell"></div>
+					</th>
+					<th style="">
+						<div class="th-inner">
+							<?php echo $this->table_title;?>							
+						</div>
+						<div class="fht-cell"></div>
+					</th>
+
+					<th style="text-align: center; ">
+						<div class="th-inner sortable"> </div>
+						<div class="fht-cell"></div>
+					</th>
+
+					<th style="">
+						<div class="th-inner sortable">Author</div>
+						<div class="fht-cell"></div>
+					</th>
+					<th style="">
+						<div class="th-inner sortable">date</div>
+						<div class="fht-cell"></div>
+					</th>									
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($this->rowset as $row):?>
+				<tr data-index="0" class="">
+					<td class="bs-checkbox">
+						<?php if($row->type == 'bfile'):?>
+							<label class="form-checkbox form-icon add-tooltip"  data-toggle="tooltip" data-original-title="Move file" data-container="body" >
+								<input type="checkbox"  name="files[]" value="<?php echo $row->id;?>"  class="jqCheckbox" >
+							</label>
+
+							<?php if(($this->role == 1) || ($this->user_id == $row->owner_user_id)): ?>								
+								<a href="<?php echo $this->url('files/wildcard', array('action' => 'delete', 'id' => $row->id, 'back' => $this->route_base_64));?>" class="btn btn-xs btn-danger add-tooltip jqDelete" data-toggle="tooltip" data-original-title="Delete file" data-container="body">
+									<i class="fa fa-times"></i>
+								</a>
+							<?php else: ?>
+								<a href="javascript:;" class="btn btn-xs btn-danger add-tooltip disabled" data-toggle="tooltip" data-original-title="Delete file" data-container="body">
+									<i class="fa fa-times"></i>
+								</a>
+							<?php endif;?>							
+
+						<?php else:?>
+
+							<?php if(($this->role == 1) || ($this->user_id == $row->owner_user_id)): ?>
+
+								<a href="<?php echo $this->url('files/wildcard', array('action' => 'edit-folder', 'id' => $row->id));?>" class="btn btn-xs btn-default add-tooltip iframe-folder" data-toggle="tooltip" data-original-title="Edit folder name" data-container="body">
+									<i class="fa fa-pencil"></i>
+								</a>
+
+								<a href="<?php echo $this->url('files/wildcard', array('action' => 'delete-folder', 'id' => $row->id, 'back' => $this->route_base_64));?>" class="btn btn-xs btn-danger add-tooltip jqDelete" data-toggle="tooltip" data-original-title="Delete folder" data-container="body">
+									<i class="fa fa-times"></i>
+								</a>
+
+							<?php else: ?>
+
+								<a href="javascript:;" class="btn btn-xs btn-default add-tooltip  disabled" data-toggle="tooltip" data-original-title="Edit folder name" data-container="body">
+									<i class="fa fa-pencil"></i>
+								</a>
+
+								<a href="javascript:;" class="btn btn-xs btn-danger add-tooltip disabled" data-toggle="tooltip" data-original-title="Delete folder" data-container="body">
+									<i class="fa fa-times"></i>
+								</a>
+
+							<?php endif;?>
+							
+						<?php endif;?>
+
+					</td>
+
+					<td style="">
+						<?php if($row->type == 'afolder'):?>
+							<a href="<?php echo $this->url('files/wildcard', array('action' => 'list', 'folder' => $row->id));?>" class=" btn-icon icon-lg fa fa-folder add-tooltip" data-toggle="tooltip" data-original-title="View files within folder." data-container="body" style="float:left;" ></a>
+
+							<a href="<?php echo $this->url('files/wildcard', array('action' => 'list', 'folder' => $row->id));?>" class="btn-link add-tooltip"  data-toggle="tooltip" data-original-title="View files within folder." data-container="body" >
+								<?php echo $row->name;?>
+							</a>
+						<?php else: ?>
+							<label class=" btn-icon icon-lg fa fa-file" style="float:left;" ></label>
+
+							<?php if(!is_null($row->folder_id) && !is_null($row->folder_name) && !empty($row->folder_name)):?>
+
+								<?php if(is_null($this->current_folder_id) || $row->folder_id != $this->current_folder_id):?>
+
+									<a href="<?php echo $this->url('files/wildcard', array('action' => 'list', 'folder' => $row->folder_id));?>"  class="btn-link" >
+										<?php echo $row->folder_name;?>
+									</a>/<?php echo $row->name;?>
+
+								<?php else:?>
+									<?php echo $row->name;?>
+								<?php endif;?>
+
+							<?php else:?>
+								<?php echo $row->name;?>
+							<?php endif;?>
+
+						<?php endif;?>
+					</td>
+
+					<td style="text-align: center; ">						
+
+						<?php if($row->type == 'afolder'):?>
+							<?php if($row->number <= 0):?>
+								<span class="badge badge-default" style="font-size: 17px;">
+							<?php else:?>
+								<span class="badge badge-warning" style="font-size: 17px;">
+							<?php endif;?>						    
+						    	<?php echo $row->number;?>
+						    </span>
+							
+						<?php else:?>
+							<a class="icon-wrap icon-wrap-xs icon-circle bg-info add-tooltip" data-toggle="tooltip" data-original-title="Download file." data-container="body" href="<?php echo $this->url('files/wildcard', array('action' => 'download', 'id' => $row->id));?>" >
+						    	<i class="fa fa-cloud-download fa-0x"></i>
+						    </a>
+						<?php endif;?>
+
+					</td>
+
+					<td style=""><?php echo $row->display_name;?></td>
+
+					<td style="">
+						<span class="text-muted">
+							<i class="fa fa-clock-o"> </i><?php echo ' '.date('M d, Y h:i A', strtotime($row->date));?>
+						</span>						
+					</td>												
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>		
+
+	</div>
+					
+	<!--Mail footer-->
+	<div class="panel-footer clearfix">
+		<div class="pull-right">
+			<?php echo $paginator ?>
+		</div>
+	</div>
+
+
+</div>
+<?php $this->inlineScript()->captureStart() ?>
+
+	jQuery(document).ready(function($) {
+
+		$(".jqDelete").click(function(){
+            return confirm('Please confirm that you want to deleted the selected record.');
+		});
+
+		$(".iframe-folder").colorbox({
+			iframe:true, 
+			width:"50%", 
+			height:"62%",
+			onClosed:function(){				
+				parent.location.reload();
+			}
+		});
+
+		$(".iframe").colorbox({
+			iframe:true, 
+			width:"70%", 
+			height:"84%",
+			onClosed:function(){				
+				parent.location.reload();
+			}
+		});
+
+		$(".callbacks").colorbox({
+			onOpen:function(){ alert('onOpen: colorbox is about to open'); },
+			onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
+			onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
+			onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
+			onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+		});
+
+		$("#jqMoveFiles").click(function() {
+
+			var ids = "";
+			var $chk = $(".jqCheckbox").filter(":checked");
+
+			if(!$chk.size())
+			{
+				var url_move = "<?php echo $this->url('files/wildcard', ['action' => 'move-files', 'back' => $this->route_base_64]);?>";
+				window.location = url_move;
+				return false;
+			}
+
+			$chk.each(function(i, o) {
+				ids += $(o).val() + ",";
+			})
+
+			var url = "<?php echo $this->url('files/wildcard', ['action' => 'move-files', 'back' => $this->route_base_64])?>?files=" + ids;
+
+			$.colorbox({
+				href: url,
+				iframe:true,
+				width:"60%", 
+				height:"100%",
+				onClosed:function(){
+					parent.location.reload();
+				}
+			});
+		});
+
+		$("#jqDownloadFiles").click(function() {
+			var ids = "";
+			var $chk = $(".jqCheckbox").filter(":checked");
+
+			if(!$chk.size())
+			{
+				var url_download = "<?php echo $this->url('files/wildcard', ['action' => 'download-files', 'back' => $this->route_base_64]);?>";
+				window.location = url_download;
+				return false;
+			}
+
+			$chk.each(function(i, o) {
+				ids += $(o).val() + ",";
+			})
+
+			var url = "<?php echo $this->url('files/wildcard', ['action' => 'download-files', 'back' => $this->route_base_64])?>?files=" + ids;
+			window.location = url;
+
+		});
+
+		$("#jqDeleteFiles").click(function() {
+			
+			var ids = "";
+			var $chk = $(".jqCheckbox").filter(":checked");
+
+			if(!$chk.size())
+			{
+				var url_delete = "<?php echo $this->url('files/wildcard', ['action' => 'delete-files', 'back' => $this->route_base_64]);?>";
+				window.location = url_delete;
+				return false;
+			}
+
+
+            if(confirm('Please confirm that you want to deleted the selected records.'))
+            {
+            	$chk.each(function(i, o) {
+					ids += $(o).val() + ",";
+				})
+
+				var url = "<?php echo $this->url('files/wildcard', ['action' => 'delete-files', 'back' => $this->route_base_64])?>?files=" + ids;
+				window.location = url;
+            }			
+
+		});
+
+
+		$("#jqMainCheckbox").click(function(){
+
+			if( $(this).is(':checked') ) 
+			{
+			    $(".jqCheckbox").click();
+			}
+			else
+			{
+				$(".jqCheckbox").click();				
+				$(".jqCheckbox").parent().removeClass("active");
+			}
+
+		});
+
+
+    });
+
+<?php $this->inlineScript()->captureEnd() ?>
